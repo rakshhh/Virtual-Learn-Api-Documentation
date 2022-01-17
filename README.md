@@ -9,7 +9,7 @@
 #### Register user - Send OTP to given phone number
 
 ```http
-  POST https://virtual-learn-api.herokuapp.com/api/v1/user/signup/otp
+  POST https://virtual-learn-api.herokuapp.com/api/v1/users/signup/otp
 ```
  INPUT FORMAT
 | Body (raw)(JSON) | Type     | Description                |
@@ -25,7 +25,7 @@ OUTPUT FORMAT (Output will be in the form of JSON object)
 #### Register user - Verify phone number
 
 ```http
-  POST https://virtual-learn-api.herokuapp.com/api/v1/user/signup/verify
+  POST https://virtual-learn-api.herokuapp.com/api/v1/users/signup/verify
 ```
  INPUT FORMAT
 
@@ -43,7 +43,7 @@ OUTPUT FORMAT
 #### Register user - Create account using user details (Will receive authentication key after registration)
 
 ```http
-  POST https://virtual-learn-api.herokuapp.com/api/v1/user/signup/register
+  POST https://virtual-learn-api.herokuapp.com/api/v1/users/signup/register
 ```
  INPUT FORMAT
 
@@ -66,7 +66,7 @@ OUTPUT FORMAT
 #### Login (Authentication key will be received)
 
 ```http
-  POST https://virtual-learn-api.herokuapp.com/api/v1/user/login
+  POST https://virtual-learn-api.herokuapp.com/api/v1/users/login
 ```
  INPUT FORMAT
 
@@ -87,7 +87,7 @@ OUTPUT FORMAT
 #### Forgot Password (on login page) (Otp will be sent to the given number if the user has registered using the same before)
 
 ```http
-  POST https://virtual-learn-api.herokuapp.com/api/v1/user/forgotpassword/otp
+  POST https://virtual-learn-api.herokuapp.com/api/v1/users/forgotpassword/otp
 ```
  INPUT FORMAT
 
@@ -105,7 +105,7 @@ OUTPUT FORMAT
 #### Verify OTP (for forgot password (on login page))
 
 ```http
-  POST https://virtual-learn-api.herokuapp.com/api/v1/user/forgotpassword/verify
+  POSThttps://virtual-learn-api.herokuapp.com/api/v1/users/forgotpassword/verify
 ```
  INPUT FORMAT
 
@@ -124,7 +124,7 @@ OUTPUT FORMAT
 #### Reset password (Possible if otp is correct)
 
 ```http
-  PATCH https://virtual-learn-api.herokuapp.com/api/v1/user/forgotpassword/resetpassword
+  PATCH https://virtual-learn-api.herokuapp.com/api/v1/users/forgotpassword/resetpassword
 ```
  INPUT FORMAT
 
@@ -143,7 +143,7 @@ OUTPUT FORMAT
 #### Get user details
 
 ```http
-  GET https://virtual-learn-api.herokuapp.com/api/v1/user/displayprofile
+  GET https://virtual-learn-api.herokuapp.com/api/v1/users/displayprofile
 ```
  INPUT FORMAT
 
@@ -172,7 +172,7 @@ OUTPUT FORMAT
 #### Update user details
 
 ```http
-  PATCH https://virtual-learn-api.herokuapp.com/api/v1/user/updateprofile
+  PATCH https://virtual-learn-api.herokuapp.com/api/v1/users/updateprofile
 ```
  INPUT FORMAT
 
@@ -200,7 +200,7 @@ OUTPUT FORMAT
 #### Upload user profile picture
 
 ```http
-  PATCH https://virtual-learn-api.herokuapp.com/api/v1/user/updateprofile
+  PATCH https://virtual-learn-api.herokuapp.com/api/v1/users/uploadimage
 ```
  INPUT FORMAT
 
@@ -222,7 +222,7 @@ OUTPUT FORMAT
 #### Change password providing current password
 
 ```http
-  PATCH https://virtual-learn-api.herokuapp.com/api/v1/user/changepassword/oldpassword
+  PATCH https://virtual-learn-api.herokuapp.com/api/v1/users/changepassword/oldpassword
 ```
  INPUT FORMAT
 
@@ -246,7 +246,7 @@ OUTPUT FORMAT
 #### Change password using phone number (send otp)
 
 ```http
-  POST https://virtual-learn-api.herokuapp.com/api/v1/user/changepassword/otp
+  POST https://virtual-learn-api.herokuapp.com/api/v1/users/changepassword/otp
 ```
  INPUT FORMAT
 
@@ -263,7 +263,7 @@ OUTPUT FORMAT
 #### Change password using phone number (Verify otp)
 
 ```http
-  POST https://virtual-learn-api.herokuapp.com/api/v1/user/changepassword/verify
+  POST https://virtual-learn-api.herokuapp.com/api/v1/users/changepassword/verify
 ```
  INPUT FORMAT
 
@@ -285,7 +285,7 @@ OUTPUT FORMAT
 #### Change password using phone number (Reset password)
 
 ```http
-  PATCH https://virtual-learn-api.herokuapp.com/api/v1/user/changepassword/newpassword
+  PATCH https://virtual-learn-api.herokuapp.com/api/v1/users/changepassword/newpassword
 ```
  INPUT FORMAT
 
@@ -307,7 +307,7 @@ OUTPUT FORMAT
 #### Get all courses
 
 ```http
-  GET https://virtual-learn-api.herokuapp.com/api/v1/search/
+  GET https://virtual-learn-api.herokuapp.com/api/v1/searches/
 ```
  INPUT FORMAT
 
@@ -325,7 +325,7 @@ OUTPUT FORMAT
 #### Get a course by name
 
 ```http
-  GET https://virtual-learn-api.herokuapp.com/api/v1/search/getcoursebyname
+  GET https://virtual-learn-api.herokuapp.com/api/v1/searches/getcoursebyname
 ```
  INPUT FORMAT
 
@@ -348,7 +348,7 @@ OUTPUT FORMAT
 #### Get all courses in a given category
 
 ```http
-  GET https://virtual-learn-api.herokuapp.com/api/v1/search/getallincategory
+  GET https://virtual-learn-api.herokuapp.com/api/v1/searches/getallincategory
 ```
  INPUT FORMAT
 
@@ -369,7 +369,7 @@ OUTPUT FORMAT
 #### Enroll in a course
 
 ```http
-  PATCH https://virtual-learn-api.herokuapp.com/api/v1/search/enroll
+  PATCH https://virtual-learn-api.herokuapp.com/api/v1/searches/enroll
 ```
  INPUT FORMAT
 
@@ -391,7 +391,7 @@ OUTPUT FORMAT
 #### Get all enrolled courses
 
 ```http
-  GET https://virtual-learn-api.herokuapp.com/api/v1/user/getenrolledcourses
+  GET https://virtual-learn-api.herokuapp.com/api/v1/users/getenrolledcourses
 ```
  INPUT FORMAT
 
