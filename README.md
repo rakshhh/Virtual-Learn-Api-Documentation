@@ -546,7 +546,7 @@ OUTPUT FORMAT
 
 #### Add Course
 ```http
-  POST https://virtual-learn-api.herokuapp.com/api/v1/courses/structurecourse
+  POST https://virtual-learn-api.herokuapp.com/api/v1/courses/addcourse
 ```
  INPUT FORMAT
 
