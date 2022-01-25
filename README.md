@@ -1,4 +1,9 @@
 
+# Virtual learn API
+
+
+
+
 ## API Reference
 
 #### Register user - Send OTP to given phone number
@@ -266,15 +271,15 @@ OUTPUT FORMAT
 | `200`      | ` Array of all notifications ` | Empty array in case there are no notifications. In case there are then it will bw displayed in the following format given below. |
 |`500`|`"message" : "Internal Server Error"`| Server error |
 
-[
-    {
-        "_id": <String - Notification ID>,
-        "user_id": <String - User ID>,
-        "notification": <Notification(password change, addition of new course, enrolled course, any part of course completion)>,
-        "createdAt": <String - Date at which the notification was created eg: "Mon Jan 24 2022 14:55:18 GMT+0530 (India Standard Time)" > ,
-        "__v": 0
-    }
-]
+    [
+        {
+            "_id": <String - Notification ID>,
+            "user_id": <String - User ID>,
+            "notification": <Notification(password change, addition of new course, enrolled course, any part of course completion)>,
+            "createdAt": <String - Date at which the notification was created eg: "Mon Jan 24 2022 14:55:18 GMT+0530 (India Standard Time)" > ,
+            "__v": 0
+        }
+    ]
 
 #### Delete all notifications
 
