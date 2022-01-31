@@ -331,7 +331,7 @@ OUTPUT FORMAT
 #### Get all courses in a given category
 
 ```http
-  GET https://virtual-learn-api.herokuapp.com/api/v1/searches/getallincategory
+  POST https://virtual-learn-api.herokuapp.com/api/v1/searches/getallincategory
 ```
  INPUT FORMAT
 
