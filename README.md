@@ -345,6 +345,27 @@ OUTPUT FORMAT
 | `200`      | ` "courses" : <course schema>  ` | All courses under the given category will be displayed. |
 |`500`|`"message" : "Internal Server Error"`| Server error |
 
+#### Get courses of multiple categories with multiple chapter selection
+
+```http
+  POST https://virtual-learn-api.herokuapp.com/api/v1/searches/getcoursebymultiplefilters
+```
+ INPUT FORMAT
+
+| Body | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `category`      | `Array of String. Each element is category ID` | Mention IDs of all the categories required.|
+| `chapter`      | `Array of String. Each element specifies number of chapters ` | Mention the required number of chapters.|
+
+
+OUTPUT FORMAT 
+| Status Code | Response received     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `200`      | ` "courses" : <course schema>  ` | All courses under the given category will be displayed. |
+|`500`|`"message" : "Internal Server Error"`| Server error |
+
+
+
 
 #### Get all categories available
 
