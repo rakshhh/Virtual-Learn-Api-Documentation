@@ -1,9 +1,4 @@
 
-# Virtual learn API
-
-
-
-
 ## API Reference
 
 #### Register user - Send OTP to given phone number
@@ -317,7 +312,7 @@ OUTPUT FORMAT
 #### Get a course by name
 
 ```http
-  GET https://virtual-learn-api.herokuapp.com/api/v1/searches/getcoursebyname
+  POST https://virtual-learn-api.herokuapp.com/api/v1/searches/getcoursebyname
 ```
  INPUT FORMAT
 
@@ -342,7 +337,7 @@ OUTPUT FORMAT
 
 | Body | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `category`      | `String` | Category required  **Required**.|
+| `category`      | `String` | Mention ID of the Category **Required**.|
 
 OUTPUT FORMAT 
 | Status Code | Response received     | Description                       |
@@ -363,13 +358,20 @@ OUTPUT FORMAT
 OUTPUT FORMAT 
 | Status Code | Response received     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `200`      | ` "data" : <array of category names>  ` | All unique category names. |
+| `200`      | ` "data" : <array of category objects>  ` | Category object will be of as given below. |
 |`500`|`"message" : "Internal Server Error"`| Server error |
+
+    {
+        "_id": <ID of the category>,
+        "name": <Category Name>,
+        "categoryImageUrl": <URL of the category icon>,
+        "__v": 0
+    }
 
 #### Get course details by ID
 
 ```http
-  GET https://virtual-learn-api.herokuapp.com/api/v1/searches/id
+  POST https://virtual-learn-api.herokuapp.com/api/v1/searches/id
 ```
  INPUT FORMAT
 
@@ -390,60 +392,120 @@ OUTPUT FORMAT
     "data": {
         "_id": <String - Course ID>,
         "name": <String - Name of the course>,
-        "category": <String - Category of the course>,
+        "courseImageUrl" <String - course image or thumbnail>,
+        "category": {
+             "_id": <String - Category ID>,
+            "name": <String - Category name>,
+            "categoryImageUrl": <String - Category icon or image>,
+            "__v": 0
+        },
+        "subcategories" : <Array - Subcategories>
         "courseContent": {
             "chapter": <Number - Number of chapters>,
             "lesson": <Number - Number of lessons>,
             "assignmentTest": <Number - Number of tests>,
             "totalLength": <String - Time required for entire course to complete>
         },
-        "chapters": {
-            "chapterName": <String - Chapter Name>,
-            "chapterID": {
+        "chapters": [
+                "chapterID": {
                 "_id": <String - Chapter ID>,
+                "name" : <String - Name of the chapter>,
+                "order" : <Number - Chapter Number>,
                 "videos": [
                     {
                         "videoID": [
                             {
                                 "_id": <String - Video ID>,
                                 "name": <String - Name of the video>,
+                                "videoImageUrl": <String - Thumbnail of the video>,
+                                "order" : <Number - Video Number>,
                                 "url": <String - Url of the video>,
+                                "timeDuration" <String - Time required to complete video>
                                 "__v": 0
                             },
                             {
-                                "_id": <String - Video ID of another video in this chapter>,
+                                "_id": <String - Video ID>,
                                 "name": <String - Name of the video>,
+                                "videoImageUrl": <String - Thumbnail of the video>,
+                                "order" : <Number - Video Number>,
                                 "url": <String - Url of the video>,
+                                "timeDuration" <String - Time required to complete video>
                                 "__v": 0
                             }
                         ]
                     }
                 ],
-                "questionnaire": [
-                    {
-                        "questionID": [
-                            {
+                "questionnaire": {
+                        "questionID": {
                                 "_id": <String - Question ID>,
-                                "question": <String - The Question>,
-                                "options": <Array - Each element in the array is an option>,
-                                "answer": <String - Answer to the question>,
+                                "name" <String - Name of the test>,
+                                "numberOfQuestions" : <Number - Number of questions in the test>,
+                                "timeDuration" : <String - Time duration of the test>,
+                                "questionAnswers" [
+                                    {
+                                        "order" : <Number - Question Number>,
+                                        "question": <String - The Question>,
+                                        "options": <Array - Each element in the array is an option>,
+                                        "answer": <String - Answer to the question>,
+                                    },
+                                    {
+                                        "order" : <Number - Question Number>,
+                                        "question": <String - The Question>,
+                                        "options": <Array - Each element in the array is an option>,
+                                        "answer": <String - Answer to the question>,
+                                    }
+                                ],
                                 "__v": 0
+                               
                             },
-                            {
-                                "_id": <String - Question ID of another question in this chapter>,
-                                "question": <String - The Question>,
-                                "options": <Array - Each element in the array is an option>,
-                                "answer": <String - Answer to the question>,
-                                "__v": 0
-                            }
-                        ]
-                    }
-                ],
-                "numberOfVideos": <Number - Number of videos>,
-                "numberOfQuestionnaires": <Number - Number of questions>,
-                "__v": 0
+                        
+                    },
+                    "numberOfVideos": <Number - Number of videos>,
+                    "numberOfQuestions": <Number - Number of questions>,
+                    "__v": 0
+                },
+                
             }
+        ],
+        "overview": {
+            "_id": <String - Overview ID>,
+            "shortDescription": <String - Short Description>,
+            "previewVideoUrl": <String - Url of the video>,
+            "longDescription": <String - Description of the course>,
+            "courseIncludes": [
+                {
+                    "iconUrl": <String - Icons url>,
+                    "description": <Stirng- Description>
+                },
+                {
+                    "iconUrl": <String - Icons url>,
+                    "description": <Stirng- Description>
+                },
+                {
+                    "iconUrl": <String - Icons url>,
+                    "description": <Stirng- Description>
+                }
+            ],
+            "whatYouWillLearn": [
+                {
+                    "iconUrl": <String - Icons url>,
+                    "description": <Stirng- Description>
+                },
+                {
+                    "iconUrl": <String - Icons url>,
+                    "description": <Stirng- Description>
+                }
+            ],
+            "requirements": [
+                <String - Array of requirements> 
+            ],
+            "instructorName": <String - Name of the instructor>,
+            "instructorImageUrl": <Sring - Author's Image>,
+            "instructorTitle": <Sring - Author's Title>,
+            "instructorDescription": <String - Author's Description>,
+            "__v": 0
         },
+        
         "__v": 0
     }
     }
@@ -471,12 +533,15 @@ OUTPUT FORMAT
 | Body | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `name`      | `String` | Name of the video  **Required**.|
+| `uvideoImageUrlrl`      | `String` | Url of the video thumbnail  **Required**.|
+| `order`      | `Number` | Order of the video  **Required**.|
 | `url`      | `String` | Url of the video  **Required**.|
+| `timeDuration`      | `String` | Time duration of the video  **Required**.|
 
 OUTPUT FORMAT 
 | Status Code | Response received     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `200`      | ` name, url, id, __v  ` | Video is added. Video details will be displayed. Make a note of the id. |
+| `200`      | ` <Video Schema> ` | Video is added. Video details will be displayed. Make a note of the id. |
 |`500`|`"message" : "Internal Server Error"`| Server error |
 
 
@@ -492,14 +557,42 @@ OUTPUT FORMAT
 
 | Body | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `question`      | `String` | Question  **Required**.|
-| `options`      | `Array` | Array of options  **Required**.|
-| `answer`      | `String` | Answer  **Required**.|
+| Input as example given below |
+
+        {
+            "name" : <String - Name of the test>,
+            "numberOfQuestions" : <Number -Number of questions in the test>,
+            "timeDuration" : <String - TIme Duration of the test>,
+            "questionAnswers": [
+                {
+                    "order" : <Number - Question number>,
+                    "question" : <String - Question>",
+                    "options" : [
+                        <String - Array of options>,
+                        <String - Array of options>,
+                        <String - Array of options>,
+                        <String - Array of options>                        
+                        ],
+                    "answer" : <String - Answer>
+                },
+                {
+                    "order" : <Number - Question number>,
+                    "question" : <String - Question>",
+                    "options" : [
+                        <String - Array of options>,
+                        <String - Array of options>,
+                        <String - Array of options>,
+                        <String - Array of options>                        
+                        ],
+                    "answer" : <String - Answer>
+                }
+            ] 
+        }
 
 OUTPUT FORMAT 
 | Status Code | Response received     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `200`      | ` question, options, answer, id, __v  ` | Make a note of the id. |
+| `200`      | ` <Questionaire Schema>  ` | Make a note of the id. |
 |`500`|`"message" : "Internal Server Error"`| Server error |
 
 
@@ -518,30 +611,95 @@ OUTPUT FORMAT
 | Input as the given example. 
 
 
-    {
-        "videos": {
+        {
+            "name" : <String - Name of the chapter>,
+            "order" : <Number - Chapter Number>,
+            "videos": {
 
-            "videoID" : [
-                <The ID of the first video that we had noted here>,
-                <Next video's ID here>"
-            ]
-    
-        },
-        "questionnaire": {
-            "questionID" : [
-                <The ID of the first question we had noted here>,
-                <Next questions's ID here>"
-            ]
-        },
-        "numberOfVideos": <Number - Number of videos>,
-        "numberOfQuestionnaires": <Number - Number of Questions>
+                "videoID" : [
+                    <String - ID of the first video>,
+                    <ID of the second video>,
+
+                ]
+        
+            },
+            "questionnaire": {
+                "questionID" : <String - ID of the questionnaire>
+                
+            },
+            "numberOfVideos": <Number - Number of videos>,
+            "numberOfQuestions": <Number - Number of Questions>
+        }
+
+OUTPUT FORMAT 
+| Status Code | Response received     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `200`      | `<chapter schema> ` | Make a note of the id. |
+|`500`|`"message" : "Internal Server Error"`| Server error |
+
+
+#### Add Overview
+```http
+  POST https://virtual-learn-api.herokuapp.com/api/v1/courses/addoverview
+```
+ INPUT FORMAT
+
+| Header | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Authorization`      | `String` | Admin auth key |
+
+| Body | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| Input as the given example. 
+
+
+    {
+        "shortDescription" : <String - Short description of the course>,
+        "previewVideoUrl" : <String - Url of the preview video>,
+        "longDescription" : <String - About the course in detail>,
+        "courseIncludes" : [
+            {
+                "iconUrl" : <String - URL of the icon>,
+                "description" : <String - Point>
+            },
+            {
+                "iconUrl" : <String - URL of the icon>,
+                "description" : <String - Point>
+            },
+            {
+                "iconUrl" : <String - URL of the icon>,
+                "description" : <String - Point>
+            }
+        ],
+        "whatYouWillLearn" : [
+            {
+                "iconUrl" : <String - URL of the icon>,
+                "description" : <String - Point>
+            },
+            {
+                "iconUrl" : <String - URL of the icon>,
+                "description" : <String - Point>
+            }
+
+        ],
+        "requirements" : [
+            <String - Point>,
+            <String - Point>,
+            <String - Point>
+
+        ],
+        "instructorName" : <String - Name of the instructor>,
+        "instructorImageUrl":  <String - URL of the instructor's image>,
+        "instructorTitle" :  <String - Title of the instructor>,
+        "instructorDescription" :  <String - About instructor in detail>
     }
 
 OUTPUT FORMAT 
 | Status Code | Response received     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `200`      | `<chapter details will be displayed> ` | Make a note of the id. |
+| `200`      | `<overview schema> ` | Make a note of the id. |
 |`500`|`"message" : "Internal Server Error"`| Server error |
+
 
 
 #### Add Course
@@ -560,22 +718,59 @@ OUTPUT FORMAT
 
     {
         "name" : <String - Course Name here>,
-        "category" : <String - Category name here>,
+        "courseImageUrl" : <String - Url of the course Image>,
+        "category" : <String - Category ID here>,
+        "subcategories" [
+            <String - Subcategory 1>,
+            <String - Subcategory 2>,
+
+        ],
         "courseContent" : {
             "chapter" : <Number - Number of chapters>,
             "lesson" : <Number - Total number of lessons>,
             "assignmentTest" : <Number - Total number of tests>,
             "totalLength" : <String - Total time required for the course>
         },
-        "chapters" : {
-            "chapterName" :<String - Name of the Chapter> <Add chapters in series here>,
+        "chapters" : [ 
+            {
+                "chapterID" : <String - Mention ID of the chapter that we had previously noted>
+            },
+            {
             "chapterID" : <String - Mention ID of the chapter that we had previously noted>
-        }
+            }   
+          
+        ],
+        "overview" : <String- ID of the overview>
     }
 
 OUTPUT FORMAT 
 | Status Code | Response received     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `200`      | ` Course details will be displayed  ` | Course is now added successfully |
+| `200`      | ` <Course Schema>  ` | Course is now added successfully |
 |`500`|`"message" : "Internal Server Error"`| Server error |
 
+#### Add category
+```http
+  POST https://virtual-learn-api.herokuapp.com/api/v1/courses/addcategory
+```
+ INPUT FORMAT
+
+| Header | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Authorization`      | `String` | Admin auth key |
+
+| Body | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| Input as the given example. 
+
+
+        {
+            "name" : <String - Name of the category>,
+            "categoryImageUrl" : <String - URL of the category icon>
+        }
+
+OUTPUT FORMAT 
+| Status Code | Response received     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `200`      | `<category schema> ` | Make a note of the id. |
+|`500`|`"message" : "Internal Server Error"`| Server error |
