@@ -556,7 +556,7 @@ OUTPUT FORMAT
 | Status Code | Response received     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `200`      | `"message" : "Enrolled in course successfully"` | Enrolling successful. |
-| `409`      | `"message": "Already enrolled in course"` | User has alreafy enrolled in course. |
+| `409`      | `"message": "Already enrolled in course"` | User has already enrolled in course. |
 |`404` |  ` "message": "Course Not Found" ` | Wrong course ID |
 |`401`| ` "message": "Authentication Failed" ` |Check auth key|
 |`500`|`"message" : "Internal Server Error"`| Server error |
@@ -599,6 +599,31 @@ OUTPUT FORMAT
             }
         ]
     }
+
+#### Get course progress
+
+```http
+  POST https://virtual-learn-api.herokuapp.com/api/v1/users/getcourseprogress
+```
+ INPUT FORMAT
+
+| Header | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Authorization`      | `String` | Auth key received after user registration / login **Required**.|
+
+| Body (form-data) | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `courseID`      | ` String` | ID of the course  **Required**.|
+
+OUTPUT FORMAT 
+| Status Code | Response received     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `200`      | `"progressData" : {} ` | Progress of the course in the chapterProgressData as an array. |
+| `409`      | ` "message" : " User has not enrolled in the course"` | User has not enrolled in course. |
+|`401`| ` "message": "Authentication Failed" ` |Check auth key|
+|`500`|`"message" : "Internal Server Error"`| Server error |
+
+
 # For ADMIN
 
 #### Add video
