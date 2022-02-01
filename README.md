@@ -540,7 +540,7 @@ OUTPUT FORMAT
 #### Enroll in Course
 
 ```http
-  PATCH https://virtual-learn-api.herokuapp.com/api/v1/users/enroll
+  POST https://virtual-learn-api.herokuapp.com/api/v1/users/enroll
 ```
  INPUT FORMAT
 
@@ -561,7 +561,44 @@ OUTPUT FORMAT
 |`401`| ` "message": "Authentication Failed" ` |Check auth key|
 |`500`|`"message" : "Internal Server Error"`| Server error |
 
+#### Get all enrolled courses
 
+```http
+  GET https://virtual-learn-api.herokuapp.com/api/v1/users/getenrolledcourses
+```
+ INPUT FORMAT
+
+| Header | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Authorization`      | `String` | Auth key received after user registration / login **Required**.|
+
+
+OUTPUT FORMAT 
+| Status Code | Response received     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `200`      | `"coursesEnrolled" : [ {}, {} ]` | All courses the user has enrolled in, res in the format given below. |
+|`404` |  ` "message": "User has not enrolled in any course" ` | User has not enrolled in any of the courses. |
+|`401`| ` "message": "Authentication Failed" ` |Check auth key|
+|`500`|`"message" : "Internal Server Error"`| Server error |
+
+    {
+        "coursesEnrolled": [
+            {
+                "_id": <ID of course status>,
+                "userId": <ID od user>,
+                "courseID": <ID of course>,
+                "chapterProgressData": <chapterProgress empty if the user has not saved any cprogress>,
+                "__v": 0
+            }, 
+            {
+                "_id": <ID of course status>,
+                "userId": <ID od user>,
+                "courseID": <ID of course>,
+                "chapterProgressData": <chapterProgress empty if the user has not saved any cprogress>,
+                "__v": 0
+            }
+        ]
+    }
 # For ADMIN
 
 #### Add video
