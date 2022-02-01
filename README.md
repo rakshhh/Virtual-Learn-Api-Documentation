@@ -271,6 +271,7 @@ OUTPUT FORMAT
             "_id": <String - Notification ID>,
             "user_id": <String - User ID>,
             "notification": <Notification(password change, addition of new course, enrolled course, any part of course completion)>,
+            "notificationIcon" : <String - URL of notification icon>,
             "createdAt": <String - Date at which the notification was created eg: "Mon Jan 24 2022 14:55:18 GMT+0530 (India Standard Time)" > ,
             "__v": 0
         }
@@ -623,6 +624,20 @@ OUTPUT FORMAT
 |`401`| ` "message": "Authentication Failed" ` |Check auth key|
 |`500`|`"message" : "Internal Server Error"`| Server error |
 
+### Update course progress
+```http
+  PATCH https://virtual-learn-api.herokuapp.com/api/v1/users/updatecourseprogress
+```
+| Header | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Authorization`      | `String` | Auth key received after user registration / login **Required**.|
+
+| Body (form-data) | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `courseID`      | ` String` | ID of the course  **Required**.|
+Rest as the format below
+
+
 
 # For ADMIN
 
@@ -762,6 +777,7 @@ OUTPUT FORMAT
     {
         "shortDescription" : <String - Short description of the course>,
         "previewVideoUrl" : <String - Url of the preview video>,
+        "previewVideoThumbnail" : <String - URL of preview video thumbnail>,
         "longDescription" : <String - About the course in detail>,
         "courseIncludes" : [
             {
