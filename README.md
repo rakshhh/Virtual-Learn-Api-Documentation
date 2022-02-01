@@ -537,6 +537,29 @@ OUTPUT FORMAT
 |`500`|`"message" : "Internal Server Error"`| Server error |
 
 
+#### Enroll in Course
+
+```http
+  PATCH https://virtual-learn-api.herokuapp.com/api/v1/users/enroll
+```
+ INPUT FORMAT
+
+| Header | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Authorization`      | `String` | Auth key received after user registration / login **Required**.|
+
+| Body (form-data) | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `courseID`      | ` String` | ID of the course  **Required**.|
+
+OUTPUT FORMAT 
+| Status Code | Response received     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `200`      | `"message" : "Enrolled in course successfully"` | Enrolling successful. |
+| `409`      | `"message": "Already enrolled in course"` | User has alreafy enrolled in course. |
+|`404` |  ` "message": "Course Not Found" ` | Wrong course ID |
+|`401`| ` "message": "Authentication Failed" ` |Check auth key|
+|`500`|`"message" : "Internal Server Error"`| Server error |
 
 
 # For ADMIN
