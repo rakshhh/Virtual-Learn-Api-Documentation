@@ -685,7 +685,7 @@ OUTPUT FORMAT
 
 ### Get the course progress
 ```http
-  POST https://virtual-learn-api.herokuapp.com/api/v1/users/updatequestionaireprogress
+  POST https://virtual-learn-api.herokuapp.com/api/v1/users/getallprogress
 ```
 | Header | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
