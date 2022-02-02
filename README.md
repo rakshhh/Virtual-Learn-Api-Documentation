@@ -627,7 +627,7 @@ OUTPUT FORMAT
 
 ### Update video progress
 ```http
-  POST https://virtual-learn-api.herokuapp.com/api/v1/users/updatecourseprogress
+  POST https://virtual-learn-api.herokuapp.com/api/v1/users/updatevideoprogress
 ```
 | Header | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
