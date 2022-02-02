@@ -601,7 +601,7 @@ OUTPUT FORMAT
         ]
     }
 
-#### Get course progress
+#### Get course progress(only to check if user has enrolled or not)
 
 ```http
   POST https://virtual-learn-api.herokuapp.com/api/v1/users/getcourseprogress
@@ -624,9 +624,10 @@ OUTPUT FORMAT
 |`401`| ` "message": "Authentication Failed" ` |Check auth key|
 |`500`|`"message" : "Internal Server Error"`| Server error |
 
-### Update course progress
+
+### Update video progress
 ```http
-  PATCH https://virtual-learn-api.herokuapp.com/api/v1/users/updatecourseprogress
+  POST https://virtual-learn-api.herokuapp.com/api/v1/users/updatecourseprogress
 ```
 | Header | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
@@ -635,9 +636,152 @@ OUTPUT FORMAT
 | Body (form-data) | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `courseID`      | ` String` | ID of the course  **Required**.|
-Rest as the format below
+As the format below
+    {
+        "courseID": <String>,
+        "chapterID" : <String>,
+        "videoID" : <String>,
+        "videoOrder" : <Number - Order of the video>,
+        "progressRate" : <Number - (pass only numbers)percentage completed>,
+        "watchedTill" : <String>
+    }
+
+OUTPUT FORMAT 
+| Status Code | Response received     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `200`      | `old data(can be ignored) ` | Status saved. |
+| `403`      | ` message: "You are not enrolled in this course"` | User has not enrolled in course. |
+|`401`| ` "message": "Authentication Failed" ` |Check auth key|
+|`500`|`"message" : "Internal Server Error"`| Server error |
+
+### Update questionnaire progress/result
+```http
+  POST https://virtual-learn-api.herokuapp.com/api/v1/users/updatequestionaireprogress
+```
+| Header | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Authorization`      | `String` | Auth key received after user registration / login **Required**.|
+
+| Body (form-data) | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `courseID`      | ` String` | ID of the course  **Required**.|
+As the format below
+    {
+        "courseID": <String>,
+        "chapterID" : <String>,
+        "questionaireID" : <String>,
+        "approvalRate" : <Number - in percentage>,
+        "right" : <Number - Number of right answers>,
+        "wrong" : <Number - Number of wrong answers>
+    }
+
+OUTPUT FORMAT 
+| Status Code | Response received     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `200`      | `old data(can be ignored) ` | Status saved. |
+|`401`| ` "message": "Authentication Failed" ` |Check auth key|
+|`500`|`"message" : "Internal Server Error"`| Server error |
 
 
+### Get the course progress
+```http
+  POST https://virtual-learn-api.herokuapp.com/api/v1/users/updatequestionaireprogress
+```
+| Header | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Authorization`      | `String` | Auth key received after user registration / login **Required**.|
+
+| Body (form-data) | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `courseID`      | ` String` | ID of the course  **Required**.|
+
+
+OUTPUT FORMAT 
+| Status Code | Response received     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `200`      | <Object>` | Output as the format given below. |
+|`401`| ` "message": "Authentication Failed" ` |Check auth key|
+|`500`|`"message" : "Internal Server Error"`| Server error |
+
+    {
+        "videos": [
+            {
+                "_id": "<String>",
+                "userId": "<String>",
+                "courseID": "<String>",
+                "chapterID": "<String>",
+                "videoID": "<String>",
+                "videoOrder": 1,
+                "progressRate": 100,
+                "watchedTill": "<String>",
+                "__v": 0
+            },
+            {
+                "_id": "<String>",
+                "userId": "<String>",
+                "courseID": "<String>",
+                "chapterID": "<String>",
+                "videoID": "<String>",
+                "videoOrder": 2,
+                "progressRate": 100,
+                "watchedTill": "<String>",
+                "__v": 0
+            },
+            {
+                "_id": "<String>",
+                "userId": "<String>",
+                "courseID": "<String>",
+                "chapterID": "<String>",
+                "videoID": "<String>",
+                "videoOrder": 3,
+                "progressRate": 100,
+                "watchedTill": "5 min",
+                "__v": 0
+            }
+        ],
+        "questionaire": [
+            {
+                "_id": "<String>",
+                "userId": "<String>",
+                "courseID": "<String>",
+                "chapterID": "<String>",
+                "questionaireID": "<String>",
+                "approvalRate": 80,
+                "right": 8,
+                "wrong": 2,
+                "__v": 0
+            }
+        ],
+        "chapters": [
+            {
+                "_id": "<String>",
+                "userId": "<String>",
+                "courseID": "<String>",
+                "chapterID": "<String>",
+                "chapterProgressRate": 100,
+                "__v": 0,
+                "chapterApprovalRate": 80
+            },
+            {
+                "_id": "<String>",
+                "userId": "<String>",
+                "courseID": "<String>",
+                "chapterID": "<String>",
+                "chapterProgressRate": 80,
+                "__v": 0
+            }
+        ],
+        "course": {
+            "_id": "<String>",
+            "userId": "<String>",
+            "courseID": "<String>",
+            "joinedOn": "Wed Feb 02 2022 11:04:34 GMT+0530 (India Standard Time)",
+            "__v": 0,
+            "courseCompletionRate": 100,
+            "completedOn": "Wed Feb 02 2022 13:45:32 GMT+0530 (India Standard Time)",
+            "courseApprovalRate": 80
+        }
+    }
 
 # For ADMIN
 
