@@ -293,6 +293,27 @@ OUTPUT FORMAT
 | `200`      | ` "message": "Notifications cleared" ` | Notifications are deleted. |
 |`500`|`"message" : "Internal Server Error"`| Server error |
 
+#### Get all offers
+
+```http
+  GET https://virtual-learn-api.herokuapp.com/api/v1/
+```
+OUTPUT FORMAT 
+| Status Code | Response received     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `200`      | ` <Array of objects. Each object is an offer ` | In the format given below. |
+|`500`|`"message" : "Internal Server Error"`| Server error |
+
+    [
+        {
+            "_id": "<String - Note this ID to delete this offer>",
+            "imageUrl": "<String>",
+            "headline": "<String>",
+            "description": "<String - Empty in case no description is given>",
+            "createdAt": "<String>",
+            "__v": 0
+        }
+    ]
 
 #### Get all courses
 
@@ -1039,4 +1060,58 @@ OUTPUT FORMAT
 | Status Code | Response received     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `200`      | `<category schema> ` | Make a note of the id. |
+|`500`|`"message" : "Internal Server Error"`| Server error |
+
+#### Add offer
+```http
+  POST https://virtual-learn-api.herokuapp.com/api/v1/
+```
+ INPUT FORMAT
+
+| Header | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Authorization`      | `String` | Admin auth key |
+
+| Body | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| Input as the given example. 
+
+
+    {
+        "imageUrl":"<String>",
+        "headline":"<String>",
+        "description":"<String>"
+        
+    }
+
+OUTPUT FORMAT 
+| Status Code | Response received     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `200`      | `<Offer Object> ` | Make a note of the id in case you want to delete. |
+|`500`|`"message" : "Internal Server Error"`| Server error |
+
+
+#### Delete offer
+```http
+  DELETE https://virtual-learn-api.herokuapp.com/api/v1/
+```
+ INPUT FORMAT
+
+| Header | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Authorization`      | `String` | Admin auth key |
+
+| Body | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| Input as the given example. 
+
+
+    {
+        "_id" : "<String>"
+    }
+
+OUTPUT FORMAT 
+| Status Code | Response received     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `200`      | `"deletedCount" : <Number> ` | Number will be 1 in case it is deleted. |
 |`500`|`"message" : "Internal Server Error"`| Server error |
