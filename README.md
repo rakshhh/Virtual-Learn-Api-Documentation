@@ -72,8 +72,8 @@ OUTPUT FORMAT
 
 | Body | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `number`      | `String` | Phone number provided before **Required**.|
-| `otp`      | `Number` | OTP received on the phone number **Required**.  |
+| `username`      | `String` | Username **Required**.|
+| `password`      | `String` | Password **Required**.  |
 
 OUTPUT FORMAT 
 | Status Code | Response received     | Description                       |
