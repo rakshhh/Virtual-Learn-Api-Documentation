@@ -1,4 +1,7 @@
 
+# Virtual learn API
+
+
 ## API Reference
 
 #### Register user - Send OTP to given phone number
@@ -107,7 +110,7 @@ OUTPUT FORMAT
 #### Verify OTP (for forgot password (on login page))
 
 ```http
-  POSThttps://virtual-learn-api.herokuapp.com/api/v1/users/forgotpassword/verify
+  POST https://virtual-learn-api.herokuapp.com/api/v1/users/forgotpassword/verify
 ```
  INPUT FORMAT
 
@@ -170,6 +173,8 @@ OUTPUT FORMAT
 |      | `"facebookLink" : <Link to user's facebook profile> ` | | 
 |      | `"image" : <Link to user's profile picture> ` | | 
 |      | `"_id" : <User's id (in the database)> ` | | 
+|      | `"coverImage" : <Link to user's cover image> ` | | 
+|      | `"coverImageCloudinary_id" : <Cover image's id (in the database)> ` | | 
 |`401`| ` "message": "Authentication Failed" ` |Check auth key|
 |`500`|`"message" : "Internal Server Error"`| Server error |
 
@@ -221,10 +226,34 @@ OUTPUT FORMAT
 OUTPUT FORMAT 
 | Status Code | Response received     | Description                       |
 | :-------- | :------- | :-------------------------------- |
+| `200`      | `"message" : "Cover image uploaded successfully"` | Photo uploaded. |
+| `400`      | `"message": "Failed to upload"` | Failed to upload photo. |
+|`401`| ` "message": "Authentication Failed" ` |Check auth key|
+|`500`|`"message" : "Internal Server Error"`| Server error |
+
+#### Upload cover image for user's profile
+
+```http
+  PATCH https://virtual-learn-api.herokuapp.com/api/v1/users/uploadcoverimage
+```
+ INPUT FORMAT
+
+| Header | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Authorization`      | `String` | Auth key received after user registration / login **Required**.|
+
+| Body (form-data) | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `image`      | `file` | Image in jpeg/png format  **Required**.|
+
+OUTPUT FORMAT 
+| Status Code | Response received     | Description                       |
+| :-------- | :------- | :-------------------------------- |
 | `200`      | `"message" : "Picture uploaded successfully"` | Photo uploaded. |
 | `400`      | `"message": "Failed to upload"` | Failed to upload photo. |
 |`401`| ` "message": "Authentication Failed" ` |Check auth key|
 |`500`|`"message" : "Internal Server Error"`| Server error |
+
 
 #### Change password providing current password
 
@@ -408,6 +437,30 @@ OUTPUT FORMAT
         "_id": <ID of the category>,
         "name": <Category Name>,
         "categoryImageUrl": <URL of the category icon>,
+        "searchFrequency" : <Number - Number of times this category has been searched>
+        "__v": 0
+    }
+
+#### Get top searched categories
+
+```http
+  GET https://virtual-learn-api.herokuapp.com/api/v1/searches/topcategories
+```
+ INPUT FORMAT
+ -
+ Not Needed
+
+OUTPUT FORMAT 
+| Status Code | Response received     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `200`      | ` "data" : <array of category objects>  ` | Categories with Search Frequency in decending order. |
+|`500`|`"message" : "Internal Server Error"`| Server error |
+
+    {
+        "_id": <ID of the category>,
+        "name": <Category Name>,
+        "categoryImageUrl": <URL of the category icon>,
+        "searchFrequency" : <Number - Number of times this category has been searched>
         "__v": 0
     }
 
