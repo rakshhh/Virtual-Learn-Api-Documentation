@@ -162,22 +162,34 @@ OUTPUT FORMAT
 OUTPUT FORMAT 
 | Status Code | Response received     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `200 (OK)`      | `"number" : <User's phone number> ` | User details  are displayed.| 
-|      | `"fullname" : <User's full name> ` | | 
-|      | `"username" : <User's username> ` | | 
-|      | `"email" : <User's mail id> ` | | 
-|      | `"occupation" : <User's Occupation> ` | | 
-|      | `"dateOfBirth" : <User's Date Of Birth> ` | | 
-|      | `"gender" : <User's Gender> ` | | 
-|      | `"twitterLink" : <Link to user's twitter profile> ` | | 
-|      | `"facebookLink" : <Link to user's facebook profile> ` | | 
-|      | `"image" : <Link to user's profile picture> ` | | 
-|      | `"_id" : <User's id (in the database)> ` | | 
-|      | `"coverImage" : <Link to user's cover image> ` | | 
-|      | `"coverImageCloudinary_id" : <Cover image's id (in the database)> ` | | 
+| `200 (OK)`      | `<data object and has completed object in the format given below` | User details  are displayed.| 
 |`401`| ` "message": "Authentication Failed" ` |Check auth key|
 |`500`|`"message" : "Internal Server Error"`| Server error |
 
+    {
+        "data": {
+            "_id":<String - This is the ID of the user data>,
+            "number": <String - Phone number of the user>,
+            "fullname": <String - User's full name>,
+            "username": <String - Username>,
+            "email": <String - Email ID of the user>,
+            "occupation" : <String - User's occupation>,
+            "dateOfBirth" : <Date - This data is of type 'date' that is present in MONGODB>,
+            "gender" :  <String - Gender of the user>,
+            "facebookLink" : <String - Link to user's facebook profile>,
+            "twitterLink" : <String - Link to user's twitter profile>,
+            "image": <String - URL of user's profile picture>,
+            "cloudinary_id": <String - Cloudinary ID of the profile picture>,
+            "coverImage": <String - URL of user's cover photo>,
+            "coverImageCloudinary_id": <String - Cloudinary ID of user's cover photo>,
+            
+        },
+        "hasCompleted": {
+            "chapters": <Number of chapters completed>,
+            "courses": <Number of courses completed>,
+            "test": <Number of tests completed>
+        }
+    }
 
 #### Update user details
 
@@ -299,10 +311,9 @@ OUTPUT FORMAT
         {
             "_id": <String - Notification ID>,
             "user_id": <String - User ID>,
-            "notification": <Notification(password change, addition of new course, enrolled course, any part of course completion)>,
-            "notificationIcon" : <String - URL of notification icon>,
-            "createdAt": <String - Date at which the notification was created eg: "Mon Jan 24 2022 14:55:18 GMT+0530 (India Standard Time)" > ,
-            "__v": 0
+            "notification": <Notification(password change, addition of new course, enrolment in new course, chapter completion, test completion, course completion)>,
+            "notificationIcon" : <String - URL of notification icon will be different acc to the type of notification>,
+            "createdAt": <String - Date at which the notification was created, will be in ISO format" > 
         }
     ]
 
@@ -330,17 +341,16 @@ OUTPUT FORMAT
 OUTPUT FORMAT 
 | Status Code | Response received     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `200`      | ` <Array of objects. Each object is an offer ` | In the format given below. |
+| `200`      | ` <Array of objects. Each object is an offer> ` | In the format given below. |
 |`500`|`"message" : "Internal Server Error"`| Server error |
 
     [
         {
             "_id": "<String - Note this ID to delete this offer>",
-            "imageUrl": "<String>",
-            "headline": "<String>",
+            "imageUrl": "<String - URL of the offer image>",
+            "headline": "<String - Headline of the offer>",
             "description": "<String - Empty in case no description is given>",
-            "createdAt": "<String>",
-            "__v": 0
+            "createdAt": "<String of type ISO>"
         }
     ]
 
@@ -430,15 +440,14 @@ OUTPUT FORMAT
 OUTPUT FORMAT 
 | Status Code | Response received     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `200`      | ` "data" : <array of category objects>  ` | Category object will be of as given below. |
+| `200`      | ` "data" : <array of category objects>  ` | Category object will be as given below. |
 |`500`|`"message" : "Internal Server Error"`| Server error |
 
     {
-        "_id": <ID of the category>,
-        "name": <Category Name>,
-        "categoryImageUrl": <URL of the category icon>,
+        "_id": <String - ID of the category object>,
+        "name": <String - Category Name>,
+        "categoryImageUrl": <String - URL of the category icon>,
         "searchFrequency" : <Number - Number of times this category has been searched>
-        "__v": 0
     }
 
 #### Get top searched categories
@@ -457,11 +466,10 @@ OUTPUT FORMAT
 |`500`|`"message" : "Internal Server Error"`| Server error |
 
     {
-        "_id": <ID of the category>,
-        "name": <Category Name>,
-        "categoryImageUrl": <URL of the category icon>,
+        "_id": <String - ID of the category object>,
+        "name": <String - Category Name>,
+        "categoryImageUrl": <String - URL of the category icon>,
         "searchFrequency" : <Number - Number of times this category has been searched>
-        "__v": 0
     }
 
 #### Get course details by ID
@@ -482,25 +490,25 @@ OUTPUT FORMAT
 OUTPUT FORMAT 
 | Status Code | Response received     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `200`      | ` "data" : <object of course details>  ` | Course details in the given format. |
+| `200`      | ` "data" : <object of course details>  ` | Course details in the format given below. |
 
     {
     "data": {
         "_id": <String - Course ID>,
         "name": <String - Name of the course>,
-        "courseImageUrl" <String - course image or thumbnail>,
+        "courseImageUrl" <String - URL of course image or thumbnail>,
         "category": {
              "_id": <String - Category ID>,
             "name": <String - Category name>,
-            "categoryImageUrl": <String - Category icon or image>,
-            "__v": 0
+            "categoryImageUrl": <String - URL of Category icon or image>,
+            "searchFrequency" : <Number - Number of times this category has been searched>
         },
-        "subcategories" : <Array - Subcategories>
+        "subcategories" : <Array - Each element is a subcategory>
         "courseContent": {
             "chapter": <Number - Number of chapters>,
             "lesson": <Number - Number of lessons>,
             "assignmentTest": <Number - Number of tests>,
-            "totalLength": <String - Time required for entire course to complete>
+            "totalLength": <String - Time required for entire course to complete (till now this data stored is in minutes)>
         },
         "chapters": [
                 "chapterID": {
@@ -566,38 +574,39 @@ OUTPUT FORMAT
         "overview": {
             "_id": <String - Overview ID>,
             "shortDescription": <String - Short Description>,
-            "previewVideoUrl": <String - Url of the video>,
+            "previewVideoUrl": <String - URL of the video>,
+            "previewVideoThumbnail": <String - URL of the preview video thumbnail>
             "longDescription": <String - Description of the course>,
             "courseIncludes": [
                 {
-                    "iconUrl": <String - Icons url>,
-                    "description": <Stirng- Description>
+                    "iconUrl": <String - Icons URL>,
+                    "description": <String- Description>
                 },
                 {
-                    "iconUrl": <String - Icons url>,
-                    "description": <Stirng- Description>
+                    "iconUrl": <String - Icons URL>,
+                    "description": <String- Description>
                 },
                 {
-                    "iconUrl": <String - Icons url>,
-                    "description": <Stirng- Description>
+                    "iconUrl": <String - Icons URL>,
+                    "description": <String- Description>
                 }
             ],
             "whatYouWillLearn": [
                 {
-                    "iconUrl": <String - Icons url>,
-                    "description": <Stirng- Description>
+                    "iconUrl": <String - Icons URL>,
+                    "description": <String- Description>
                 },
                 {
-                    "iconUrl": <String - Icons url>,
-                    "description": <Stirng- Description>
+                    "iconUrl": <String - Icons URL>,
+                    "description": <String- Description>
                 }
             ],
             "requirements": [
                 <String - Array of requirements> 
             ],
             "instructorName": <String - Name of the instructor>,
-            "instructorImageUrl": <Sring - Author's Image>,
-            "instructorTitle": <Sring - Author's Title>,
+            "instructorImageUrl": <String - Author's Image>,
+            "instructorTitle": <String - Author's Title>,
             "instructorDescription": <String - Author's Description>,
             "__v": 0
         },
@@ -651,7 +660,7 @@ OUTPUT FORMAT
 OUTPUT FORMAT 
 | Status Code | Response received     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `200`      | `"coursesEnrolled" : [ {}, {} ]` | All courses the user has enrolled in, res in the format given below. |
+| `200`      | `"coursesEnrolled" : Array of objects. Each object is a course` | All courses the user has enrolled in, res in the format given below. |
 |`404` |  ` "message": "User has not enrolled in any course" ` | User has not enrolled in any of the courses. |
 |`401`| ` "message": "Authentication Failed" ` |Check auth key|
 |`500`|`"message" : "Internal Server Error"`| Server error |
@@ -659,17 +668,23 @@ OUTPUT FORMAT
     {
         "coursesEnrolled": [
             {
-                "_id": <ID of course status>,
-                "userId": <ID od user>,
-                "courseID": <ID of course>,
-                "chapterProgressData": <chapterProgress empty if the user has not saved any cprogress>,
+                "_id": <String - ID of this object>,
+                "userId": <String - ID of the user>,
+                "courseID": <String - ID of course>,
+                "joinedOn": <String - Of type ISO>,
+                "courseCompletionRate": <Number - Rate of course completion(in percentage but no symbol is appended(%))>
+                "courseApprovalRate": <Number - Course approval rate>
+                "completedOn": <String - Of type ISO>
                 "__v": 0
             }, 
             {
-                "_id": <ID of course status>,
-                "userId": <ID od user>,
-                "courseID": <ID of course>,
-                "chapterProgressData": <chapterProgress empty if the user has not saved any cprogress>,
+                "_id": <String - ID of this object>,
+                "userId": <String - ID of the user>,
+                "courseID": <String - ID of course>,
+                "joinedOn": <String - Of type ISO>,
+                "courseCompletionRate": <Number - Rate of course completion(in percentage but no symbol is appended(%))>
+                "courseApprovalRate": <Number - Course approval rate>
+                "completedOn": <String - Of type ISO>
                 "__v": 0
             }
         ]
@@ -693,11 +708,26 @@ OUTPUT FORMAT
 OUTPUT FORMAT 
 | Status Code | Response received     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `200`      | `"progressData" : {} ` | Progress of the course in the chapterProgressData as an array. |
+| `200`      | `"progressData" : {} ` | Data of the form given below. |
 | `409`      | ` "message" : " User has not enrolled in the course"` | User has not enrolled in course. |
 |`401`| ` "message": "Authentication Failed" ` |Check auth key|
 |`500`|`"message" : "Internal Server Error"`| Server error |
 
+    {
+        "progressData" : {
+
+                "_id": <String - ID of this object>,
+                "userId": <String - ID of the user>,
+                "courseID": <String - ID of course>,
+                "joinedOn": <String - Of type ISO>,
+                "courseCompletionRate": <Number - Rate of course completion(in percentage but no symbol is appended(%))>
+                "courseApprovalRate": <Number - Course approval rate>
+                "completedOn": <String - Of type ISO>
+                "__v": 0
+
+        }
+    }
+            
 
 ### Update video progress
 ```http
@@ -709,12 +739,11 @@ OUTPUT FORMAT
 
 | Body (form-data) | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `courseID`      | ` String` | ID of the course  **Required**.|
 As the format below
     {
-        "courseID": <String>,
-        "chapterID" : <String>,
-        "videoID" : <String>,
+        "courseID": <String - ID of the course>,
+        "chapterID" : <String - ID of the chapter>,
+        "videoID" : <String - ID of the video>,
         "videoOrder" : <Number - Order of the video>,
         "progressRate" : <Number - (pass only numbers)percentage completed>,
         "watchedTill" : <String>
@@ -723,12 +752,12 @@ As the format below
 OUTPUT FORMAT 
 | Status Code | Response received     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `200`      | `old data(can be ignored) ` | Status saved. |
+| `200`      | ` Data (can be ignored) ` | Status saved. |
 | `403`      | ` message: "You are not enrolled in this course"` | User has not enrolled in course. |
 |`401`| ` "message": "Authentication Failed" ` |Check auth key|
 |`500`|`"message" : "Internal Server Error"`| Server error |
 
-### Update questionnaire progress/result
+### Update questionaire progress/result
 ```http
   POST https://virtual-learn-api.herokuapp.com/api/v1/users/updatequestionaireprogress
 ```
@@ -738,12 +767,11 @@ OUTPUT FORMAT
 
 | Body (form-data) | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `courseID`      | ` String` | ID of the course  **Required**.|
 As the format below
     {
-        "courseID": <String>,
-        "chapterID" : <String>,
-        "questionaireID" : <String>,
+        "courseID": <String - ID of the course>,
+        "chapterID" : <String - ID of the chapter>,
+        "questionaireID" : <String - ID of the questionaire>,
         "approvalRate" : <Number - in percentage>,
         "right" : <Number - Number of right answers>,
         "wrong" : <Number - Number of wrong answers>
@@ -752,7 +780,7 @@ As the format below
 OUTPUT FORMAT 
 | Status Code | Response received     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `200`      | `old data(can be ignored) ` | Status saved. |
+| `200`      | ` Data(can be ignored) ` | Status saved. |
 |`401`| ` "message": "Authentication Failed" ` |Check auth key|
 |`500`|`"message" : "Internal Server Error"`| Server error |
 
@@ -773,87 +801,90 @@ OUTPUT FORMAT
 OUTPUT FORMAT 
 | Status Code | Response received     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `200`      | <Object>` | Output as the format given below. |
+| `200`      | ` <Object with array for videos, questionaire, chapter, course progress data> ` | Output as the format given below. |
 |`401`| ` "message": "Authentication Failed" ` |Check auth key|
 |`500`|`"message" : "Internal Server Error"`| Server error |
 
     {
         "videos": [
-            {
-                "_id": "<String>",
-                "userId": "<String>",
-                "courseID": "<String>",
-                "chapterID": "<String>",
-                "videoID": "<String>",
-                "videoOrder": 1,
-                "progressRate": 100,
-                "watchedTill": "<String>",
+            {{
+                "_id": <String>,
+                "userId": <String>,
+                "courseID": <String>,
+                "chapterID": <String>,
+                "videoID": <String>,
+                "videoOrder": <Number>,
+                "progressRate": <Number>,
+                "watchedTill": <String>,
                 "__v": 0
             },
             {
-                "_id": "<String>",
-                "userId": "<String>",
-                "courseID": "<String>",
-                "chapterID": "<String>",
-                "videoID": "<String>",
-                "videoOrder": 2,
-                "progressRate": 100,
-                "watchedTill": "<String>",
+                "_id": <String>,
+                "userId": <String>,
+                "courseID": <String>,
+                "chapterID": <String>,
+                "videoID": <String>,
+                "videoOrder": <Number>,
+                "progressRate": <Number>,
+                "watchedTill": <String>,
                 "__v": 0
             },
             {
-                "_id": "<String>",
-                "userId": "<String>",
-                "courseID": "<String>",
-                "chapterID": "<String>",
-                "videoID": "<String>",
-                "videoOrder": 3,
-                "progressRate": 100,
-                "watchedTill": "5 min",
+                "_id": <String>,
+                "userId": <String>,
+                "courseID": <String>,
+                "chapterID": <String>,
+                "videoID": <String>,
+                "videoOrder": <Number>,
+                "progressRate": <Number>,
+                "watchedTill": <String>,
                 "__v": 0
             }
         ],
         "questionaire": [
             {
-                "_id": "<String>",
-                "userId": "<String>",
-                "courseID": "<String>",
-                "chapterID": "<String>",
-                "questionaireID": "<String>",
-                "approvalRate": 80,
-                "right": 8,
-                "wrong": 2,
+                "_id": <String>,
+                "userId": <String>,
+                "courseID": <String>,
+                "chapterID": <String>,
+                "questionaireID": <String>,
+                "approvalRate": <Number>,
+                "right": <Number>,
+                "wrong": <Number>,
                 "__v": 0
             }
         ],
         "chapters": [
             {
-                "_id": "<String>",
-                "userId": "<String>",
-                "courseID": "<String>",
-                "chapterID": "<String>",
-                "chapterProgressRate": 100,
-                "__v": 0,
-                "chapterApprovalRate": 80
+                "_id": <String>,
+                "userId": <String>,
+                "courseID": <String>,
+                "chapterID": <String>,
+                "chapterOrder": <Number>,
+                "chapterProgressRate": <Number>,
+                "chapterApprovalRate": <Number>
+                "__v": 0
             },
             {
-                "_id": "<String>",
-                "userId": "<String>",
-                "courseID": "<String>",
-                "chapterID": "<String>",
-                "chapterProgressRate": 80,
+                "_id": <String>,
+                "userId": <String>,
+                "courseID": <String>,
+                "chapterID": <String>,
+                "chapterOrder": <Number>,
+                "chapterProgressRate": <Number>,
+                "chapterApprovalRate": <Number>
                 "__v": 0
             }
         ],
         "course": {
-            "_id": "<String>",
-            "userId": "<String>",
-            "courseID": "<String>",
-            "joinedOn": "Wed Feb 02 2022 11:04:34 GMT+0530 (India Standard Time)",
-            "__v": 0,
-            "courseCompletionRate": 100,
-            "completedOn": "Wed Feb 02 2022 13:45:32 GMT+0530 (India Standard Time)",
-            "courseApprovalRate": 80
+            "_id": <String>,
+            "userId": <String>,
+            "courseID": <String>,
+            "joinedOn": <String>, 
+            "courseCompletionRate": <Number>,
+            "completedOn": <String>,
+            "courseApprovalRate": <Number>,
+            "__v": 0
         }
     }
 
@@ -957,17 +988,17 @@ OUTPUT FORMAT
 
                 "videoID" : [
                     <String - ID of the first video>,
-                    <ID of the second video>,
+                    <String - ID of the second video>,
 
                 ]
         
             },
             "questionnaire": {
-                "questionID" : <String - ID of the questionnaire>
+                "questionID" : <String - ID of the questionaire>
                 
             },
             "numberOfVideos": <Number - Number of videos>,
-            "numberOfQuestions": <Number - Number of Questions>
+            "numberOfQuestions": <Number - Number of Questions in Questionaire>
         }
 
 OUTPUT FORMAT 
