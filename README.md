@@ -415,8 +415,8 @@ OUTPUT FORMAT
 
 | Body | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `category`      | `Array of String. Each element is category ID` | Mention IDs of all the categories required.|
-| `chapter`      | `Array of String. Each element specifies number of chapters ` | Mention the required number of chapters.|
+| `category`      | `Array of Strings. Each element is category ID` | Mention IDs of all the categories required.|
+| `chapter`      | `Array of Numbers. Each element specifies number of chapters ` | Mention the required number of chapters.|
 
 
 OUTPUT FORMAT 
