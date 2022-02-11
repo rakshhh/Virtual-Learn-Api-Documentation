@@ -690,7 +690,7 @@ OUTPUT FORMAT
         ]
     }
 
-#### Get course progress(only to check if user has enrolled or not)
+#### Get course progress(For use in any place where much detail of course progress is not required. E.g. to check if user has enrolled in the course, details for certificate in case course completion rate is 100% etc)
 
 ```http
   POST https://virtual-learn-api.herokuapp.com/api/v1/users/getcourseprogress
