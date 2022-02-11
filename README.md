@@ -313,9 +313,26 @@ OUTPUT FORMAT
             "user_id": <String - User ID>,
             "notification": <Notification(password change, addition of new course, enrolment in new course, chapter completion, test completion, course completion)>,
             "notificationIcon" : <String - URL of notification icon will be different acc to the type of notification>,
-            "createdAt": <String - Date at which the notification was created, will be in ISO format" > 
+            "createdAt": <String - Date at which the notification was created, will be in ISO format" >,
+            "isRead": <Boolean - default value (during creation) is false>
         }
     ]
+#### Mark all notifications as read
+
+```http
+  POST https://virtual-learn-api.herokuapp.com/api/v1/users/notifications
+```
+| Header | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Authorization`      | `String` | Auth key received after user registration / login **Required**.|
+
+
+OUTPUT FORMAT 
+| Status Code | Response received     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `200`      | ` <Update result> ` | Notifications are now marked read(i.e. isRead value is update to true). |
+|`500`|`"message" : "Internal Server Error"`| Server error |
+
 
 #### Delete all notifications
 
@@ -341,18 +358,23 @@ OUTPUT FORMAT
 OUTPUT FORMAT 
 | Status Code | Response received     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `200`      | ` <Array of objects. Each object is an offer> ` | In the format given below. |
+| `200`      | ` <Object of Array of objects. Each object is an offer> ` | In the format given below. |
 |`500`|`"message" : "Internal Server Error"`| Server error |
 
-    [
-        {
-            "_id": "<String - Note this ID to delete this offer>",
-            "imageUrl": "<String - URL of the offer image>",
-            "headline": "<String - Headline of the offer>",
-            "description": "<String - Empty in case no description is given>",
-            "createdAt": "<String of type ISO>"
-        }
-    ]
+
+    {
+    "data":[
+                {
+                    "_id": "<String - Note this ID to delete this offer>",
+                    "imageUrl": "<String - URL of the offer image>",
+                    "headline": "<String - Headline of the offer>",
+                    "description": "<String - Empty in case no description is given>",
+                    "createdAt": "<String of type ISO>"
+                }
+        ]
+    }
+
+
 
 #### Get all courses
 
@@ -471,6 +493,24 @@ OUTPUT FORMAT
         "categoryImageUrl": <String - URL of the category icon>,
         "searchFrequency" : <Number - Number of times this category has been searched>
     }
+
+#### Get top searched courses under the particular category
+
+```http
+  POST https://virtual-learn-api.herokuapp.com/api/v1/searches/topcourses
+```
+ INPUT FORMAT
+| Body | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `category`      | `<String - ID of the category>` | Mention ID of the category|
+
+
+OUTPUT FORMAT 
+| Status Code | Response received     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `200`      | ` "data" : <array of course objects>  ` | Courses in the category with Search Frequency in decending order. |
+|`500`|`"message" : "Internal Server Error"`| Server error |
+
 
 #### Get course details by ID
 
@@ -608,7 +648,8 @@ OUTPUT FORMAT
             "instructorImageUrl": <String - Author's Image>,
             "instructorTitle": <String - Author's Title>,
             "instructorDescription": <String - Author's Description>,
-            "__v": 0
+            "__v": 0,
+            "searchFrequency": <Number - number of this course was searched using name or ID)
         },
         
         "__v": 0
