@@ -731,7 +731,8 @@ OUTPUT FORMAT
         ]
     }
 
-#### Get course progress(For use in any place where much detail of course progress is not required. E.g. to check if user has enrolled in the course, details for certificate in case course completion rate is 100% etc)
+
+#### Get course progress(For use in any place where much detail of course progress is not required. E.g. to check if user has enrolled in the course etc)
 
 ```http
   POST https://virtual-learn-api.herokuapp.com/api/v1/users/getcourseprogress
@@ -769,6 +770,53 @@ OUTPUT FORMAT
         }
     }
             
+
+#### My courses/Get all course progress (with course details that are required)
+
+```http
+  GET https://virtual-learn-api.herokuapp.com/api/v1/users/getmycourses
+```
+ INPUT FORMAT
+
+| Header | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Authorization`      | `String` | Auth key received after user registration / login **Required**.|
+
+
+OUTPUT FORMAT 
+| Status Code | Response received     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `200`      | `"coursesEnrolled" : {} ` | Data of the form given below. |
+| `409`      | ` "message" : " User has not enrolled in the course"` | User has not enrolled in course. |
+|`401`| ` "message": "Authentication Failed" ` |Check auth key|
+|`500`|`"message" : "Internal Server Error"`| Server error |
+
+        {
+            "coursesEnrolled": [
+                {
+                    "progress": {
+                        "_id": <String>,
+                        "userId": <String>,
+                        "courseID": <String>,
+                        "joinedOn": <String>,
+                        "courseCompletionRate": <Number>,
+                        "courseApprovalRate": <Number>,
+                        "completedOn": <String>
+                    },
+                    "course": {
+                        "_id": <String>,
+                        "name": <String>,
+                        "courseImageUrl":<String>,
+                        "courseContent": {
+                            "chapter": <Number>,
+                            "lesson": <Number>,
+                            "assignmentTest": <Number>,
+                            "totalLength": <Number>
+                        }
+                    }
+                }
+            ]
+        }
 
 ### Update video progress
 ```http
