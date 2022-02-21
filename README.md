@@ -428,7 +428,7 @@ OUTPUT FORMAT
 | `200`      | ` "courses" : <course schema>  ` | All courses under the given category will be displayed. |
 |`500`|`"message" : "Internal Server Error"`| Server error |
 
-#### Get courses of multiple categories with multiple chapter selection
+#### METHOD 1 - Get courses of multiple categories with multiple chapter selection
 
 ```http
   POST https://virtual-learn-api.herokuapp.com/api/v1/searches/getcoursebymultiplefilters
@@ -440,6 +440,37 @@ OUTPUT FORMAT
 | `category`      | `Array of Strings. Each element is category ID` | Mention IDs of all the categories required.|
 | `chapter`      | `Array of Numbers. Each element specifies number of chapters ` | Mention the required number of chapters.|
 
+    Eg: 
+    {
+            "category" : ["61f80c81b0f077ecfbb76628",
+                        "61f80ce4b0f077ecfbb7662a" ],
+            "chapter" : [1,2,3]
+    }
+
+OUTPUT FORMAT 
+| Status Code | Response received     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `200`      | ` "courses" : <course schema>  ` | All courses under the given category will be displayed. |
+|`500`|`"message" : "Internal Server Error"`| Server error |
+
+#### METHOD 2 - Get courses of multiple categories with multiple chapter selection
+
+```http
+  POST https://virtual-learn-api.herokuapp.com/api/v1/searches/getcoursebymultiplefilters
+```
+ INPUT FORMAT
+
+| Body | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `category`      | `Array of Strings. Each element is category ID` | Mention IDs of all the categories required.|
+| `chapter`      | `Array of Strings. Each element specifies range of chapters separated by / Eg. ["0/5", "5/10"] ` | Mention the required number of chapters.|
+
+    Eg: 
+    {
+        "category" : ["61f80c81b0f077ecfbb76628",
+                    "61f80ce4b0f077ecfbb7662a" ],
+        "chapter" : ["0/5", "5/10"]
+    }
 
 OUTPUT FORMAT 
 | Status Code | Response received     | Description                       |
