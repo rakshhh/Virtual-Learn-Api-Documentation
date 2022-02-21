@@ -409,6 +409,23 @@ OUTPUT FORMAT
 | `200`      | ` "courses" : <course schema>  ` | All courses with the given name will be displayed. Empty array if no course if found|
 |`500`|`"message" : "Internal Server Error"`| Server error |
 
+#### Get courses by a few words
+
+```http
+  POST https://virtual-learn-api.herokuapp.com/api/v1/searches/getcoursebywords
+```
+ INPUT FORMAT
+
+| Body | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `name`      | `String` | Any number of words **Required**.|
+
+OUTPUT FORMAT 
+| Status Code | Response received     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `200`      | ` "courses" : <course schema>  ` | All courses which contain the words used in search will be displayed. Empty array if no course if found|
+|`500`|`"message" : "Internal Server Error"`| Server error |
+
 
 
 #### Get all courses in a given category
@@ -615,6 +632,7 @@ OUTPUT FORMAT
                                 "_id": <String - Question ID>,
                                 "name" <String - Name of the test>,
                                 "numberOfQuestions" : <Number - Number of questions in the test>,
+                                "passingGrade": <Number - Passing grade of the quiz>,
                                 "timeDuration" : <String - Time duration of the test>,
                                 "questionAnswers" [
                                     {
@@ -646,7 +664,8 @@ OUTPUT FORMAT
             "_id": <String - Overview ID>,
             "shortDescription": <String - Short Description>,
             "previewVideoUrl": <String - URL of the video>,
-            "previewVideoThumbnail": <String - URL of the preview video thumbnail>
+            "previewVideoThumbnail": <String - URL of the preview video thumbnail>,
+            "previewVideoDuration": <String - Time duration of the preview video>,
             "longDescription": <String - Description of the course>,
             "courseIncludes": [
                 {
@@ -1052,7 +1071,8 @@ OUTPUT FORMAT
         {
             "name" : <String - Name of the test>,
             "numberOfQuestions" : <Number -Number of questions in the test>,
-            "timeDuration" : <String - TIme Duration of the test>,
+            "timeDuration" : <String - Time Duration of the test>,
+            "passingGrade" : <Number - Passing grade of the test>,
             "questionAnswers": [
                 {
                     "order" : <Number - Question number>,
@@ -1147,6 +1167,7 @@ OUTPUT FORMAT
         "shortDescription" : <String - Short description of the course>,
         "previewVideoUrl" : <String - Url of the preview video>,
         "previewVideoThumbnail" : <String - URL of preview video thumbnail>,
+        "previewVideoDuration" : <String - Time duration of the preview video>,
         "longDescription" : <String - About the course in detail>,
         "courseIncludes" : [
             {
