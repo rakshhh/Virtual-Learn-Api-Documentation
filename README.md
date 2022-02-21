@@ -1288,3 +1288,9 @@ OUTPUT FORMAT
 | :-------- | :------- | :-------------------------------- |
 | `200`      | `"deletedCount" : <Number> ` | Number will be 1 in case it is deleted. |
 |`500`|`"message" : "Internal Server Error"`| Server error |
+
+
+### Check Input
+```http
+    ANY_METHOD_HERE  https://virtual-learn-api.herokuapp.com/checkinput
+```
