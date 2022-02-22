@@ -1346,3 +1346,51 @@ OUTPUT FORMAT
 ```http
     ANY_METHOD_HERE  https://virtual-learn-api.herokuapp.com/checkinput
 ```
+
+### Check upload image
+```http
+    PATCH  https://virtual-learn-api.herokuapp.comapi/v1/users/testuploadimage
+```
+ INPUT FORMAT
+
+| Header | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Authorization`      | `String` | Auth key |
+
+| Body | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| ` image `| ` Image in jpeg or png format `| Image to upload |
+
+OUTPUT FORMAT 
+| Status Code | Response received     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `200`      | `"message" : "Picture uploaded successfully" + path + result of the upload` | Photo uploaded. Example output given below. |
+| `400`      | `"message": "Failed to upload"` | Failed to upload photo. |
+|`401`| ` "message": "Authentication Failed" ` |Check auth key|
+|`500`|`"message" : "Internal Server Error"`| Server error |
+
+{
+    "result": {
+        "asset_id": "134d7f701e34db513327bda6f60e31da",
+        "public_id": "oyio0qrekqs5hxed4qka",
+        "version": 1645522565,
+        "version_id": "90a8b455b9d1f3ac06b82bc70c712e53",
+        "signature": "dacaf7747598d160b95eee76916024bea7c159a4",
+        "width": 1000,
+        "height": 1080,
+        "format": "jpg",
+        "resource_type": "image",
+        "created_at": "2022-02-22T09:36:05Z",
+        "tags": [],
+        "bytes": 85241,
+        "type": "upload",
+        "etag": "27c8ce04ff5354dc8c6632bf417f0496",
+        "placeholder": false,
+        "url": "http://res.cloudinary.com/ddkaybeny/image/upload/v1645522565/oyio0qrekqs5hxed4qka.jpg",
+        "secure_url": "https://res.cloudinary.com/ddkaybeny/image/upload/v1645522565/oyio0qrekqs5hxed4qka.jpg",
+        "original_filename": "9ad8a30a8b4adb082a5d22948b4cf0b9",
+        "api_key": "153313578658248"
+    },
+    "path": "C:\\Users\\RAKSHI~1\\AppData\\Local\\Temp\\9ad8a30a8b4adb082a5d22948b4cf0b9",
+    "message": "Picture uploaded successfully"
+}
