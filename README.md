@@ -1371,26 +1371,26 @@ OUTPUT FORMAT
 
     {
         "result": {
-            "asset_id": "134d7f701e34db513327bda6f60e31da",
-            "public_id": "oyio0qrekqs5hxed4qka",
-            "version": 1645522565,
-            "version_id": "90a8b455b9d1f3ac06b82bc70c712e53",
-            "signature": "dacaf7747598d160b95eee76916024bea7c159a4",
+            "asset_id": "de9996dde5ccd1e1822c7e67211aaa5f",
+            "public_id": "god0f3nftxcpownb836g",
+            "version": 1645522952,
+            "version_id": "f9670d2c85af86de89e128d8098794a9",
+            "signature": "f4789b72c3d386a8a671b65aa737520d2671566a",
             "width": 1000,
             "height": 1080,
             "format": "jpg",
             "resource_type": "image",
-            "created_at": "2022-02-22T09:36:05Z",
+            "created_at": "2022-02-22T09:42:32Z",
             "tags": [],
             "bytes": 85241,
             "type": "upload",
             "etag": "27c8ce04ff5354dc8c6632bf417f0496",
             "placeholder": false,
-            "url": "http://res.cloudinary.com/ddkaybeny/image/upload/v1645522565/oyio0qrekqs5hxed4qka.jpg",
-            "secure_url": "https://res.cloudinary.com/ddkaybeny/image/upload/v1645522565/oyio0qrekqs5hxed4qka.jpg",
-            "original_filename": "9ad8a30a8b4adb082a5d22948b4cf0b9",
+            "url": "http://res.cloudinary.com/ddkaybeny/image/upload/v1645522952/god0f3nftxcpownb836g.jpg",
+            "secure_url": "https://res.cloudinary.com/ddkaybeny/image/upload/v1645522952/god0f3nftxcpownb836g.jpg",
+            "original_filename": "03b56c855c49dad0adcbd7345f76db05",
             "api_key": "153313578658248"
         },
-        "path": "C:\\Users\\RAKSHI~1\\AppData\\Local\\Temp\\9ad8a30a8b4adb082a5d22948b4cf0b9",
+        "path": "/tmp/03b56c855c49dad0adcbd7345f76db05",
         "message": "Picture uploaded successfully"
     }
