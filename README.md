@@ -1027,6 +1027,31 @@ OUTPUT FORMAT
         }
     }
 
+#### Upload certificate
+
+```http
+  PATCH https://virtual-learn-api.herokuapp.com/api/v1/users/uploadcertificate
+```
+ INPUT FORMAT
+
+| Header | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Authorization`      | `String` | Auth key received after user registration / login **Required**.|
+
+| Body (form-data) | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `image`      | `file` | Image in jpeg/png format  **Required**.|
+ `courseID`      | `text` | Course ID of the certificate  **Required**.|
+
+OUTPUT FORMAT 
+| Status Code | Response received     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `200`      | `"message" : "Certificate uploaded successfully"` | Certificate uploaded. |
+| `400`      | `"message": "req.file.path is not found. Please check the request(file path) being sent"` | Failed to upload certificate. |
+|`401`| ` "message": "Authentication Failed" ` |Check auth key|
+|`500`|`"message" : "Internal Server Error"`| Server error |
+
+
 # For ADMIN
 
 #### Add video
